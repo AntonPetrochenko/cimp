@@ -1,3 +1,3 @@
 Environment variables
-- DBURI
+- DBURI:
 MongoDB URI
