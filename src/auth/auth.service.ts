@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt'
 import { AuthResponse } from 'src/auth/dto/AuthResponse.dto';
 import { AuthRequest } from './dto/AuthRequest.dto';
 import { Db } from 'mongodb';
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class AuthService {
@@ -13,11 +14,17 @@ export class AuthService {
       username: authRequest.username
     })
     if (user) {
-      let token = this.jwtService.sign({
-        sub: user._id,
-        username: user.username
-      })
-      return new AuthResponse("success",token,user.username)
+      if (bcrypt.compareSync(authRequest.password,user.password)) {
+        let token = this.jwtService.sign({
+          sub: user._id,
+          username: user.username
+        })
+        return new AuthResponse("success",token,user.username)
+      } else {
+        return new AuthResponse("failure")
+      }
+      
+      
     } else {
       return new AuthResponse("failure")
     }
