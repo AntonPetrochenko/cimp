@@ -6,7 +6,7 @@ export class AuthResponse {
     status: string;
     constructor(status: "success" | "failure", token?: string, username?: string) {
         if (status == "success") {
-            this.payload = {token: token, username: username}
+            this.payload = {token: "Bearer " + token, username: username}
         }
         this.status = status
     }
