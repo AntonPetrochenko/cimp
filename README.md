@@ -1,6 +1,6 @@
 Environment variables
 - DBURI:
-MongoDB URI\
+MongoDB URI
 
 To start:
 - npm install
